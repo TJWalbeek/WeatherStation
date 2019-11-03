@@ -37,7 +37,7 @@ sudo apt-get upgrade
 ``` 
 sudo apt install apache2 
 sudo apt install php php-mbstring
-sudo apt install mariadb-server php-mysql
+sudo apt install mariadb-server php-mysql mariadb-client
 ```
 Set up MySQL user/password:
 "Root"/"****"
@@ -46,6 +46,16 @@ in browser confirm it works by typing in IP-address of RPi
 Change permissions:
 ```
 sud0 chmod 777 -R /var/www
+
+sudo phpenmod mysqli
+sudo service apache2 restart
+
+with help from 
+https://randomnerdtutorials.com/raspberry-pi-apache-mysql-php-lamp-server/
+and
+https://randomnerdtutorials.com/esp32-esp8266-raspberry-pi-lamp-server/
+https://randomnerdtutorials.com/esp32-esp8266-mysql-database-php/ 
+
 ```
 
  with help from [this video](https://www.youtube.com/watch?v=N7c8CMuBx-Y)
@@ -93,13 +103,14 @@ Measurment VARCHAR(20) REFERENCES Measures(MeasureTypeID),
 Value DECIMAL(2,1),
 PRIMARY KEY(MeasurementID)
 );
+
 CREATE TABLE EnvironmentalData (
 MeasurementID INT(6) NOT NULL AUTO_INCREMENT, 
 DateTime TIMESTAMP, 
 Source INT(6) REFERENCES Sources(SourceID), 
 Location INT(6) REFERENCES Locations(LocationsID), 
 Measurement INT(6) REFERENCES Measures(MeasureTypeID), 
-Value DECIMAL(2,1),
+Value DECIMAL(3,1),
 PRIMARY KEY(MeasurementID)
 );
 
