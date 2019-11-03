@@ -11,26 +11,33 @@ I had to include "[DHT sensor library](https://github.com/adafruit/DHT-sensor-li
 [this video]https://www.youtube.com/watch?v=xGH2XmJy1co
 
 ## Raspberry Pi
-### Setting up Raspberry Pi as web server with help from [this video](https://www.youtube.com/watch?v=N7c8CMuBx-Y)
-- Install Raspbian (with Win32DiskImager)
+Some useful tools to install on your PC first:
 - Swish (to talk to your RPi without monitor)
 - Tera Term (to talk to command line)
 
-### Install neededs software on your Raspberry Pi
+### To set up Raspberry Pi as web server we need to install:
 - linux (Raspbian)
 - Apache
 - MySQL
 - PHP
 - SSH
 
+If you don't know how to do that, there are good instructions out there, for example, follow instructions in this video:
+[Setup a Raspberry Pi Web Server](https://www.youtube.com/watch?v=vzojwG7OB7c)
+
+Don't forget to add "ssh" before booting your Pi
+
+### On your RPi
 Update existing software:
 ```
 sudo apt-get update
 sudo apt-get upgrade
 ```
-Install new stuff:
+[Install new stuff](https://howtoraspberrypi.com/how-to-install-web-server-raspberry-pi-lamp/):
 ``` 
-sudo apt-get install apache2 mysql-server mysql-client php5 php5-mysql
+sudo apt install apache2 
+sudo apt install php php-mbstring
+sudo apt install mariadb-server php-mysql
 ```
 Set up MySQL user/password:
 "Root"/"****"
@@ -41,28 +48,39 @@ Change permissions:
 sud0 chmod 777 -R /var/www
 ```
 
+ with help from [this video](https://www.youtube.com/watch?v=N7c8CMuBx-Y)
+- Install Raspbian (with Win32DiskImager)
+
+
+
+
+
 
 ### set up databae
 localhost/phpmyadmin (Php myadmin?)
 
 ```
+mysql -u root -p
+
 CREATE DATABASE WeatherDataBase;
 
-CREATE TABLE Sources (
+USE WeatherDataBase;
+
+CREATE TABLE Sources(
 SourceID INT(6) NOT NULL AUTO_INCREMENT,
-SourceName VARCHAR(20)
+SourceName VARCHAR(20),
 PRIMARY KEY(SourceID)
 );
 
-CREATE TABLE Measures (
+CREATE TABLE Measures(
 MeasureTypeID INT(6) NOT NULL AUTO_INCREMENT,
-MeasureType VARCHAR(20)
+MeasureType VARCHAR(20),
 PRIMARY KEY(MeasureTypeID)
 );
 
-CREATE TABLE Locations (
+CREATE TABLE Locations(
 LocationsID INT(6) NOT NULL AUTO_INCREMENT,
-LocationName VARCHAR(20)
+LocationName VARCHAR(20),
 PRIMARY KEY(LocationsID)
 );
 
@@ -75,6 +93,19 @@ Measurment VARCHAR(20) REFERENCES Measures(MeasureTypeID),
 Value DECIMAL(2,1),
 PRIMARY KEY(MeasurementID)
 );
+CREATE TABLE EnvironmentalData (
+MeasurementID INT(6) NOT NULL AUTO_INCREMENT, 
+DateTime TIMESTAMP, 
+Source INT(6) REFERENCES Sources(SourceID), 
+Location INT(6) REFERENCES Locations(LocationsID), 
+Measurement INT(6) REFERENCES Measures(MeasureTypeID), 
+Value DECIMAL(2,1),
+PRIMARY KEY(MeasurementID)
+);
+
+to test:
+show tables;
+desc EnvironmentalData;
 ```
 
 ## Website to load data
