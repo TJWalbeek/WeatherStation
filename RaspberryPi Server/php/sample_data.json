@@ -1,0 +1,7 @@
+[{"DateTime":"2019-11-02 23:49:48","SourceName":"arduino1","LocationName":"bedroom","MeasureType":"humidity","Value":"99.0"},
+  {"DateTime":"2019-11-02 23:54:54","SourceName":"arduino1","LocationName":"bedroom","MeasureType":"light","Value":"98.0"},
+  {"DateTime":"2019-11-02 23:57:04","SourceName":"arduino1","LocationName":"bedroom","MeasureType":"light","Value":"88.0"},
+  {"DateTime":"2019-11-05 20:30:14","SourceName":"arduino1","LocationName":"bedroom","MeasureType":"light","Value":"98.0"},
+  {"DateTime":"2019-11-05 20:30:56","SourceName":"arduino1","LocationName":"bedroom","MeasureType":"humidity","Value":"89.0"},
+  {"DateTime":"2019-11-03 20:31:08","SourceName":"arduino1","LocationName":"bedroom","MeasureType":"temperature","Value":"93.0"},
+  {"DateTime":"2019-11-05 20:31:49","SourceName":"arduino1","LocationName":"bedroom","MeasureType":"temperature","Value":"95.0"}]

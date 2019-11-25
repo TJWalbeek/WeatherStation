@@ -1,0 +1,50 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+div.graphs {
+  height: 400px;
+  width: 100%;
+  border: 1px solid black;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+.help_line {
+    stroke: gray;
+}
+
+
+.axis g.tick text{
+  font-size: 12px;
+}
+
+.text {
+  font-family: "Verdana", sans-serif;
+  /*font-family: "Times New Roman", Times, serif;*/
+}
+
+.AxisText{
+  font-family: "Verdana", sans-serif;
+  font-size: 18px;
+  fill: black;
+}
+
+.axisX g.tick text{
+  fill: gray;
+}
+
+.axisY1 g.tick text{
+  fill: Colors[0];
+}
