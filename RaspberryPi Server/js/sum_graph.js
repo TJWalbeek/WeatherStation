@@ -1,11 +1,12 @@
 
 
 // https://www.d3-graph-gallery.com/line.html
-var parseDateTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
-//var parseHour = d3.timeParse("%H");
+var parseDateTime = d3.timeParse("%Y-%m-%d %H:%M:%S"); //https://github.com/d3/d3-time-format
+var formatHour = d3.timeFormat("%H");
+var formatDate = d3.timeFormat("%Y-%m-%d");
 
 var height = 100;
-var width = 600;
+var width = 500;
 var margin = {left:75,right:50,top:25,bottom:0};
 var between = 25;
 
@@ -18,13 +19,47 @@ d3.json("/php/sample_data.json",function(error, data){
   data.forEach(function(d) {
     d.DateTime = parseDateTime(d.DateTime);
     d.Value = parseFloat(d.Value);
+
+    d.Date = formatDate(d.DateTime);
+    d.Hour = formatHour(d.DateTime);
   });
 
 //console.log(data);
 
+//http://learnjsdata.com/group_data.html
+var databyhour = d3.nest()
+  //.key(function(d) { return d.Hour + d.MeasureType; })
+  .key(function(d) { return d.MeasureType; })
+  .key(function(d) { return d.Hour; })
+  .rollup(function(v) { return {
+    Hour: d3.mean(v, function(d) { return d.Hour; }),
+    mean: d3.mean(v, function(d) { return d.Value; }),
+    sd: d3.deviation(v, function(d) { return d.Value; })
+  }; })
+  .entries(data);
+  console.log(databyhour);
+
+//https://stackoverflow.com/questions/35851383/d3-flatten-nested-data
+var flat_data= []
+databyhour.forEach(function(Measure) {
+  Measure.values.forEach(function(Hour) {
+    flat_data.push({
+      Measure: Measure.key,
+      Hour: parseFloat(Hour.key),
+      Mean: Hour.value.mean,
+      StDev: Hour.value.sd
+    });
+  });
+});
+
+flat_data.sort(function(a, b) {return +a.Hour - +b.Hour});
+console.log(flat_data);
+
+  //console.log(JSON.stringify(databyhour));
+
   var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-    .key(function(d) { return d.MeasureType;})
-    .entries(data);
+    .key(function(d) { return d.Measure;})
+    .entries(flat_data);
 
     // color palette
   //var res = sumstat.map(function(d){ return d.key }) // list of group names
@@ -33,9 +68,9 @@ d3.json("/php/sample_data.json",function(error, data){
     .domain(res)
     .range(Colors);
 
-console.log(res);
+//console.log(res);
 //console.log(data);
-  var svg = d3.select("#line_graph")
+  var svg = d3.select("#summary_graph")
               .append("svg")
               .attr("height","100%")
               .attr("width","100%");
@@ -48,8 +83,8 @@ console.log(res);
 // d3.extent(data,function(d){return d.DateTime;})[1]]
 // );
 
-  var x = d3.scaleTime() //scaleTime()
-            .domain(d3.extent(data,function(d){return d.DateTime;}))
+  var x = d3.scaleLinear() //scaleTime()
+            .domain([0,24])
             .range([0,width]);
 
   var y1 = d3.scaleLinear() //light
@@ -74,7 +109,7 @@ chartGroup.append("text")
     .attr("text-anchor", "end")
     .attr("x", width)
     .attr("y", height * 3 + 2 * between + margin.top + 20)
-    .text("Date & Time");
+    .text("Time");
 
     // Y axis label:
   chartGroup.append("text")
@@ -129,11 +164,32 @@ chartGroup.append("text")
             .attr("x2",width)
             .attr("y2",2*height+between)
 
-  var valueline2 = d3.line()
-                    .x(function(d,i) { return x(d.DateTime);})
-                    .y(function(d,i) { return y1(d.Value);});
+  // var valueline2 = d3.line()
+  //                   .x(function(d,i) { return x(d.DateTime);})
+  //                   .y(function(d,i) { return y1(d.Value);});
+
+//https://stackoverflow.com/questions/39059870/d3-js-access-data-nested-2-level-down
+//https://bl.ocks.org/blahah/1071760
+
+// var circlesGroups = svg.selectAll(".circlesGroups")
+// 	.data(databyhour)
+// 	.enter()
+// 	.append("g")
+// 	.attr("fill", function(d){ return (d.key == "temperature") ? "blue" : "red"});
+//
+// var circles = circlesGroups.selectAll(".circles")
+// 	.data(function(d){ return d.values})
+// 	.enter()
+// 	.append("circle");
+//
+// circles.attr("r", 10)
+// 	.attr("cx", function(d){ return x(d.Hour)})
+// 	.attr("cy", function(d){ return y1(d.mean)});
+
+console.log(sumstat);
 
 chartGroup.selectAll('.line')
+            //.data(function(d){ return d.values})
           .data(sumstat)
           .enter().append("path")
                   .attr("fill", "none")
@@ -141,18 +197,41 @@ chartGroup.selectAll('.line')
                   .attr("stroke-width", 1.5)
                   .attr("d", function(d){
           return d3.line()
-            .x(function(d) { return x(d.DateTime); })
-            .y(function(d) { if (d.MeasureType == "light") {return y1(d.Value)}
-                             else if (d.MeasureType =="temperature"){return y2(d.Value) + height + between}
-                             else {return y3(d.Value)+ 2 * height + 2* between}
+            .x(function(d) { return x(d.Hour); })
+            .y(function(d) { if (d.Measure == "light") {return y1(d.Mean)}
+                             else if (d.Measure =="temperature"){return y2(d.Mean) + height + between}
+                             else {return y3(d.Mean)+ 2 * height + 2* between}
               ; })
-            //.y(function(d) { return y3(d.Value); })
             (d.values)
         });
 
-            // chartGroup.append("path")
-            //           .attr("class", "line")
-            //           .attr("stroke", function(d){ return color(d.city)})
-            //           .attr("d",valueline2(data));
+
+  var area = d3.area()
+               .x(function(d,i){return x(d.Hour);})
+               .y0( y1(0))
+               //.y0(function(d,i){return y1(d.Mean - d.StDev);})
+               .y0(function(d) { if (d.Measure == "light") {return y1(d.Mean - d.StDev)}
+                                             else if (d.Measure =="temperature"){return y2(d.Mean - d.StDev) + height + between}
+                                             else {return y3(d.Mean - d.StDev)+ 2 * height + 2* between}
+                              ; })
+               //.y1( y1(1000));
+               //.y1(function(d,i){return y1(d.Mean );});
+               .y1(function(d) { if (d.Measure == "light") {return y1(d.Mean + d.StDev)}
+                                             else if (d.Measure =="temperature"){return y2(d.Mean + d.StDev) + height + between}
+                                             else {return y3(d.Mean + d.StDev)+ 2 * height + 2* between}
+                              ; })
+
+
+ chartGroup.selectAll('.path')
+
+           .data(sumstat)
+           .enter().append("path")
+           .attr("class","SD_area")
+           .attr("fill",   function(d){ return color(d.key)})
+           .attr("stroke", function(d){ return color(d.key)})
+        //  .attr("stroke-width", 1.5)
+          .attr("d", function(d) {return area(d.values); });
+          // .attr("d",area(d.values));
+
 
 });
