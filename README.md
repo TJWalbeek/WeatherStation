@@ -44,7 +44,13 @@ Here I have averaged the data from the last 2 weeks to show the values across an
 In this last graph, I display the average daily light pattern for each month during a full year of data recording. You can see beautiful seasonal patterns with more hours of daylight and higher light intensity during summer compared to winter. The "bump" around 3pm is because our windows are facing west, and around that time we get more direct sunlight in our room. The smaller peak around 11pm is from us using artificial light while getting ready to sleep.   
 <img src="Resources/Graph03.JPG" width="600">
 
+
+
+<br>
+
 # Set up
+Here I posted some instruction and tutorial on how to set up a weatherstation yourself  
+
 ## Arduino-side
 
 #### Hardware (Parts and connections)
