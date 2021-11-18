@@ -37,7 +37,7 @@ var databyhour = d3.nest()
     sd: d3.deviation(v, function(d) { return d.Value; })
   }; })
   .entries(data);
-  console.log(databyhour);
+//  console.log(databyhour);
 
 //https://stackoverflow.com/questions/35851383/d3-flatten-nested-data
 var flat_data= []
@@ -53,7 +53,7 @@ databyhour.forEach(function(Measure) {
 });
 
 flat_data.sort(function(a, b) {return +a.Hour - +b.Hour});
-console.log(flat_data);
+//console.log(flat_data);
 
   //console.log(JSON.stringify(databyhour));
 
@@ -186,7 +186,7 @@ chartGroup.append("text")
 // 	.attr("cx", function(d){ return x(d.Hour)})
 // 	.attr("cy", function(d){ return y1(d.mean)});
 
-console.log(sumstat);
+//console.log(sumstat);
 
 chartGroup.selectAll('.line')
             //.data(function(d){ return d.values})

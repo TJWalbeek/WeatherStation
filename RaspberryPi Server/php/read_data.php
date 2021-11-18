@@ -16,6 +16,7 @@ $sql = "SELECT DateTime, Sources.`SourceName`, Locations.`LocationName`,
         join Sources on Sources.SourceID = EnvironmentalData.Source
         join Locations on Locations.LocationsID = EnvironmentalData.Location
         join Measures on Measures.MeasureTypeID = EnvironmentalData.Measurement
+        WHERE DateTime >= DATE(NOW()) - INTERVAL 14 DAY
         order by DateTime";
 
 $query = mysqli_query($conn, $sql);

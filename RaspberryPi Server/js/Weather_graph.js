@@ -11,7 +11,7 @@ var between = 25;
 
 var Colors = ['blue','red','green'];
 
-d3.json("/php/sample_data.json",function(error, data){
+d3.json("/php/sample_data2.json",function(error, data){
 //d3.json("/php/read_data.php",function(error, data){
   if(error) console.log("error fetching data");
 
@@ -19,6 +19,12 @@ d3.json("/php/sample_data.json",function(error, data){
     d.DateTime = parseDateTime(d.DateTime);
     d.Value = parseFloat(d.Value);
   });
+
+var cutoffDate = new Date();
+cutoffDate.setDate(cutoffDate.getDate() - 86);
+data = data.filter(function(d) {
+  return d.DateTime > cutoffDate;
+})
 
 //console.log(data);
 
@@ -33,7 +39,7 @@ d3.json("/php/sample_data.json",function(error, data){
     .domain(res)
     .range(Colors);
 
-console.log(res);
+//console.log(res);
 //console.log(data);
   var svg = d3.select("#line_graph")
               .append("svg")
