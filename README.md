@@ -31,9 +31,10 @@ The data are stored on a Raspberry pi server (I used the 3b+ model). When sensor
 The data are displayed in a webpage that is hosted on the raspberry pi. I have not made the page public, but as long as you're in my WiFi network you can load the page from any browser on any device. I have created 3 graphs using D3.js, but of course you can add as many different graphs as you'd like.
 
 
-![Graph01](Resources/Graph01.jpg | width=100)
-![Graph02](Resources/Graph02.jpg){:height="700px" width="400px"}
-![Graph03](Resources/Graph03.jpg)
+![Graph01](Resources/Graph01.jpg | width=100)  
+![Graph02](Resources/Graph02.jpg){:height="700px" width="400px"}  
+![Graph03](Resources/Graph03.jpg)  
+
 In this first graph I display the raw data from the last 14 days. You can clearly see a daily pattern in light and humidity. This was during winter so we had our windows mostly closed, and the bedroom is not heated, therefore there is not much of a temperature change during this time.   
 <img src="Resources/Graph01.jpg" width="600">
 
