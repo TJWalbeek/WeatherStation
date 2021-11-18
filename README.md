@@ -6,7 +6,7 @@ Tools I used include:
 * Arduino / Teensy
   * Sensors
   * AT Commands
-* Raspberry Pi
+* Raspberry Pi (Unix-like)
   * Database
     * SQL
     * Python
@@ -16,19 +16,32 @@ Tools I used include:
     * D3.js / Javascript
     * CSS
 
-Disclaimer: Because most of this stuff was new to me, I used a lot of different tutorial I could find online (discussion fora, youtube, blogs etc.). For many steps I consulted and combined several tutorials and I likely don't remember all the sources. Where possible I will point to you the tutorials I used. To enhance my learning, I tried to re-write most of the code, but it is possible you recognize some signature of others.
+Disclaimer: Because most of this stuff was new to me, I used a lot of different tutorial I could find online (discussion fora, youtube, blogs etc.). For many steps I consulted and combined several tutorials and I likely don't remember all the sources. Where possible I will point you to the tutorials I used. To enhance my learning, I tried to re-write most of the code, but it is possible you recognize some signature of others.
 
 ## Overview
 Here is a rough outline of information flow in the project.
 ![Project Overiew](Resources/Overview.png)
 #### Sensors
-The sensors (I used light, temperature and humidity) are all connected to a microcontroller (I used Teensy3.2). The Teensy reads then sensors, then uses an ESP8266 module to wirelessly send the data to the server. The goal for this part was to be modular. Without much change to the code or ciruit, you should be able to add more or different sensors. The system is also not limited to a single sensor-circuit. You can add as many as you want (I think).
+The sensors (I used light, temperature and humidity) are all connected to a microcontroller (I used Teensy3.2). The Teensy reads the sensors, then uses an ESP8266 module to wirelessly send the data to the server. The goal for this part was to be modular. Without much change to the code or circuit, you should be able to add more or different sensors. The system is also not limited to a single sensor-circuit. You can add as many as you want.
 
 ##### Database
 The data are stored on a Raspberry pi server (I used the 3b+ model). When sensor data is sent, the add_data.php script adds it to the database with a timestamp. The server also runs some scheduled python scripts using crontab to backup the database and summarize the data with monthly averages.
 
 ##### Displaying the data
 The data are displayed in a webpage that is hosted on the raspberry pi. I have not made the page public, but as long as you're in my WiFi network you can load the page from any browser on any device. I have created 3 graphs using D3.js, but of course you can add as many different graphs as you'd like.
+
+
+<!-- ![Graph01](Resources/Graph01.jpg | width=100)
+![Graph02](Resources/Graph02.jpg){:height="700px" width="400px"}
+![Graph03](Resources/Graph03.jpg) -->
+In this first graph I display the raw data from the last 14 days. You can clearly see a daily pattern in light and humidity. This was during winter so we had our windows mostly closed, and the bedroom is not heated, therefore there is not much of a temperature change during this time.   
+<img src="Resources/Graph01.jpg" width="600">
+
+Here I have averaged the data from the last 2 weeks to show the values across an average day, as well as the variation (SE) between those days.  
+<img src="Resources/Graph02.jpg" width="600">
+
+In this last graph, I display the average daily light pattern for each month during a full year of data recording. You can see beautiful seasonal patterns with more hours of daylight and higher light intensity during summer compared to winter. The "bump" around 3pm is because our windows are facing west, and around that time we get more direct sunlight in our room. The smaller peak around 11pm is from us using artificial light while getting ready to sleep.   
+<img src="Resources/Graph03.jpg" width="600">
 
 # Set up
 ## Arduino-side
@@ -49,7 +62,7 @@ Here is a picture of my final setup.
 I had to include "[DHT sensor library](https://github.com/adafruit/DHT-sensor-library)" and "[Adafruit Unified Sensor](https://github.com/adafruit/Adafruit_Sensor)" both by Adafruit
 
 ### Upload code
-[this video]https://www.youtube.com/watch?v=xGH2XmJy1co
+[this video](https://www.youtube.com/watch?v=xGH2XmJy1co)
 
 ## Raspberry Pi-side
 Some useful tools to install on your PC first:
