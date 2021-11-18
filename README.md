@@ -36,13 +36,13 @@ The data are displayed in a webpage that is hosted on the raspberry pi. I have n
 ![Graph03](Resources/Graph03.jpg)  
 
 In this first graph I display the raw data from the last 14 days. You can clearly see a daily pattern in light and humidity. This was during winter so we had our windows mostly closed, and the bedroom is not heated, therefore there is not much of a temperature change during this time.   
-<img src="Resources/Graph01.jpg" width="600">
+<img src="Resources/Graph01.JPG" width="600">
 
 Here I have averaged the data from the last 2 weeks to show the values across an average day, as well as the variation (SE) between those days.  
-<img src="Resources/Graph02.jpg" width="600">
+<img src="Resources/Graph02.JPG" width="600">
 
 In this last graph, I display the average daily light pattern for each month during a full year of data recording. You can see beautiful seasonal patterns with more hours of daylight and higher light intensity during summer compared to winter. The "bump" around 3pm is because our windows are facing west, and around that time we get more direct sunlight in our room. The smaller peak around 11pm is from us using artificial light while getting ready to sleep.   
-<img src="Resources/Graph03.jpg" width="600">
+<img src="Resources/Graph03.JPG" width="600">
 
 # Set up
 ## Arduino-side
