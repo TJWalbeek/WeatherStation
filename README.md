@@ -1,6 +1,6 @@
 # WeatherStation
 
-In this project I built an Arduino/Raspberry Pi-powered weather station that displays the collected data in a local browser. In this project, I used many tools for the first time, which was part of the goal. I wanted to learn a lot of new things while having fun. I ended up with a functional product and a lot of new knowledge, which I will present to you in this repo. Because my goal was to learn to use some of the tools I used here, this is most likely not the most efficient way to build what I built. If you are looking for an optimized (both performance and cost) weather station, this is not your best source. That said, I hope you enjoy my content and join me in learning to use some new things.
+In this project I built an Arduino/Raspberry Pi-powered weather station that displays the collected data in a local browser. In this project, I used many tools for the first time, which was part of the goal. I wanted to learn a lot of new things while having fun. I ended up with a functional product and a lot of new knowledge, which I will present to you in this repo. Because my goal was to learn to use some of the tools I used here, this is most likely not the most efficient way to build what I built. If you are looking for an optimized (both performance and cost) weather station, this is not your best source. That said, I hope you enjoy my content and join me in learning how to use some new things.
 
 Tools I used include:
 * Arduino / Teensy
@@ -16,7 +16,7 @@ Tools I used include:
     * D3.js / Javascript
     * CSS
 
-Disclaimer: Because most of this stuff was new to me, I used a lot of different tutorial I could find online (discussion fora, youtube, blogs etc.). For many steps I consulted and combined several tutorials and I likely don't remember all the sources. Where possible I will point you to the tutorials I used. To enhance my learning, I tried to re-write most of the code, but it is possible you recognize some signature of others.
+Disclaimer: Because most of this stuff was new to me, I used a lot of different tutorials I could find online (discussion forums, YouTube, blogs etc.). For many steps I consulted and combined several tutorials and I likely don't remember all the sources. Where possible I will point you to the tutorials I used. To enhance my learning, I tried to re-write most of the code, but it is possible you recognize some signature of others.
 
 ## Overview
 Here is a rough outline of information flow in the project.
@@ -49,7 +49,7 @@ In this last graph, I display the average daily light pattern for each month dur
 <br>
 
 # Set up
-Here I posted some instruction and tutorial on how to set up a weatherstation yourself  
+Here I posted some instruction and tutorial on how to set up a weatherstation yourself.  
 
 ## Arduino-side
 
